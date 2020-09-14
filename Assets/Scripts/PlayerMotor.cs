@@ -5,29 +5,57 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
 
-    private const float LANE_DISTANCE = 2.5f; //set the lane width
+   // private const float LANE_DISTANCE = 2.5f; //set the lane width
+    private const float LANE_DISTANCE = 1.25f; //set the lane width
     private const float TURN_SPEED = 0.05f;
 
+    //
+    private bool isRunning = false;
 
     //  Animation
     private Animator anim;
     // Movement
     private CharacterController controller;
-    private float jumpForce = 4.0f; // WAS 4
-    private float gravity = 12f; // WAS 12
+    private float jumpForce = 5.0f; // WAS 4
+    private float gravity = 12f; 
     private float verticalVelocity;
-    private float speed = 7.0f;
+    
    
     private int desiredLane = 1; // 0=left 1=middle 2=right
 
+    // speed Modifier
+    private float originalSpeed = 7.0f;
+    private float speed = 7.0f;
+    private float speedIncreaseLastTick;
+    private float speedIncreaseTime = 2.5f;
+    private float speedIncreaseAmount = 0.1f;
+    
+
     private void Start()
     {
+        speed = originalSpeed;
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (!isRunning)
+        {
+            return; // if game is not started, dont run below code
+        }
+        
+        if (Time.time - speedIncreaseLastTick > speedIncreaseTime)
+        {
+            speedIncreaseLastTick = Time.time;
+            speed += speedIncreaseAmount;
+
+            // change modifer text display
+           GameManager.Instance.UpdateModifer(speed - originalSpeed);
+
+
+        }
+
         // gather the inputs on which lane we should be in
         if (MobileInput.Instance.SwipeLeft)
         {
@@ -87,6 +115,11 @@ public class PlayerMotor : MonoBehaviour
               
 
             }
+            else if (MobileInput.Instance.SwipeDown)
+            {
+                //slide
+                StartSliding();
+            }
         }
         else
         {
@@ -139,5 +172,47 @@ public class PlayerMotor : MonoBehaviour
    //      return Physics.Raycast(groundRay, 0.001f + 0.1f);
         
  //   }
-    
+
+    public void StartRunning()
+    {
+        isRunning = true;
+        anim.SetTrigger("StartRunning");
+        
+        // can add camera looking at something before game starts here\
+
+    }
+
+    private void StartSliding()
+    {
+        anim.SetBool("Sliding", true);
+        controller.height /= 2;
+        controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+        Invoke("StopSliding", 1.0f);
+    }
+
+    private void StopSliding()
+    {
+        anim.SetBool("Sliding", false);
+        controller.height *= 2;
+        controller.center = new Vector3(controller.center.x, controller.center.y * 2, controller.center.z);
+
+    }
+
+    private void Crash()
+    {
+        anim.SetTrigger("Death");
+        isRunning = false;
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        switch (hit.gameObject.tag)
+        {
+            case "Obstacle":
+                Crash();
+                break;
+        }
+    }
+
+  
 }

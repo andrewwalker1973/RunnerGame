@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class CameraMotor : MonoBehaviour
 {
-    public Transform lookAt; // who to look at
-    public Vector3 offset = new Vector3(0, 5.0f, -10.0f);
+    public Transform lookAt;
+    public Vector3 Offset = new Vector3(0, 5.0f, -10.0f);
 
-    private void Start()
-    {
-        transform.position = lookAt.position + offset;
-    }
+   
 
     private void LateUpdate()
     {
-        Vector3 desiredPosition = lookAt.position + offset;
+        Vector3 desiredPosition = lookAt.position + Offset;
         desiredPosition.x = 0;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
     }
