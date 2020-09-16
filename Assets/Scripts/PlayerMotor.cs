@@ -132,6 +132,8 @@ public class PlayerMotor : MonoBehaviour
            if (MobileInput.Instance.SwipeDown)
             {
                 verticalVelocity = -jumpForce;  //drop immediatly to ground
+                // Add code to drop quick and then slide
+                StartSliding();
             }
         }
         
