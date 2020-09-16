@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { set; get; }
 
     private bool isGameStarted = false;
+    public bool IsDead { set; get; }
     private PlayerMotor motor;
    
 
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (isGameStarted)
+        if (isGameStarted && !IsDead)
         {
             //Increase the score
             

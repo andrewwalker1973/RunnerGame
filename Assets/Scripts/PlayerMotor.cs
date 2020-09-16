@@ -6,7 +6,7 @@ public class PlayerMotor : MonoBehaviour
 {
 
    // private const float LANE_DISTANCE = 2.5f; //set the lane width
-    private const float LANE_DISTANCE = 1.25f; //set the lane width
+    private const float LANE_DISTANCE = 1f; //set the lane width
     private const float TURN_SPEED = 0.05f;
 
     //
@@ -16,7 +16,7 @@ public class PlayerMotor : MonoBehaviour
     private Animator anim;
     // Movement
     private CharacterController controller;
-    private float jumpForce = 5.0f; // WAS 4
+    private float jumpForce = 4f; // WAS 4
     private float gravity = 12f; 
     private float verticalVelocity;
     
@@ -203,6 +203,7 @@ public class PlayerMotor : MonoBehaviour
     {
         anim.SetTrigger("Death");
         isRunning = false;
+        GameManager.Instance.IsDead = true;
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
