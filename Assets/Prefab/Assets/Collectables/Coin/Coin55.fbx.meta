@@ -3,7 +3,17 @@ guid: dd101aae323b8fb428aea06db8eb3bc3
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 03 - Default
+    second: {fileID: 2100000, guid: 0e30170ca93ec9d4e80b84cd7be8b522, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Game-Coins-PNG-jpeg-715x715
+    second: {fileID: 2800000, guid: 65375b23186987546a96abc03b7465cb, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

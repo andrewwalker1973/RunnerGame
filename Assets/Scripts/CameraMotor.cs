@@ -22,7 +22,7 @@ public class CameraMotor : MonoBehaviour
 
     private readonly float _distance = 3.0f;
     // private readonly float _height = 0.7f;
-    private readonly float _height = 1.0f;
+    private readonly float _height = 1.5f;
     private readonly float _heightOffset = 0.0f;
     private readonly float _heightDamping = 5.0f;
     private readonly float _rotationDamping = 3.0f;
