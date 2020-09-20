@@ -24,8 +24,8 @@ public class PlayerMotor : MonoBehaviour
     private int desiredLane = 1; // 0=left 1=middle 2=right
 
     // speed Modifier
-    private float originalSpeed = 7.0f;
-    private float speed = 7.0f;
+    private float originalSpeed = 9.0f; // was 7
+    private float speed = 9.0f; // was 7
     private float speedIncreaseLastTick;
     private float speedIncreaseTime = 2.5f;
     private float speedIncreaseAmount = 0.1f;
@@ -132,8 +132,10 @@ public class PlayerMotor : MonoBehaviour
            if (MobileInput.Instance.SwipeDown)
             {
                 verticalVelocity = -jumpForce;  //drop immediatly to ground
-                // Add code to drop quick and then slide
-                StartSliding();
+                                                // Add code to drop quick and then slide
+            StartSliding();
+               // anim.SetBool("DropSlide", true);
+
             }
         }
         

@@ -21,7 +21,7 @@ public class Coin : MonoBehaviour
         {
             GameManager.Instance.GetCoin();
             anim.SetTrigger("Collected");
-            Destroy(this.gameObject, 1.5f); /// find a pooling system to prevent this
+            
 
         }
     }
