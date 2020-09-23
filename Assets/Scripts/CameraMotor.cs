@@ -4,19 +4,7 @@ using UnityEngine;
 
 public class CameraMotor : MonoBehaviour
 {
-    /*  public Transform lookAt;
-      public Vector3 Offset = new Vector3(0, 5.0f, -10.0f);
-
-
-
-      private void LateUpdate()
-      {
-          Vector3 desiredPosition = lookAt.position + Offset;
-          desiredPosition.x = 0;
-          transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
-      }
-
-      */
+    
 
     public Transform target;
 
@@ -27,9 +15,16 @@ public class CameraMotor : MonoBehaviour
     private readonly float _heightDamping = 5.0f;
     private readonly float _rotationDamping = 3.0f;
 
+    public bool IsMoving { set; get; }
+    public Vector3 rotation = new Vector3(35, 0, 0);
+
+
     void LateUpdate()
     {
         if (target == null) return;
+
+        if (!IsMoving)
+            return;
 
         var position = transform.position;
         var targetPosition = target.position;
@@ -53,8 +48,9 @@ public class CameraMotor : MonoBehaviour
         position -= currentRotation * distance;
 
         transform.position = new Vector3(position.x, currentHeight + _heightOffset, position.z);
-        //   }
 
-        //  transform.LookAt(target);
+        // 
+        transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(rotation),2.0f * Time.deltaTime);
+        
     }
 }

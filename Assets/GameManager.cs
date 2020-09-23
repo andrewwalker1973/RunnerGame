@@ -18,11 +18,12 @@ public class GameManager : MonoBehaviour
     // UI and UI Fields
     public Text scoreText, coinText, modifierText; // convert to TMProd
     private float score, coinScore, modifierScore;
+    public Animator gameCanvas;
 
     private int lastScore;
 
     // Death Menu
-    public Animator deathMenuAnim;
+    public Animator deathMenuAnim,menuanim, menu_coinAnim;
     public Text deadscoreText, deadcoinText;
 
     private void Awake()
@@ -44,8 +45,12 @@ public class GameManager : MonoBehaviour
         {
             isGameStarted = true;
             motor.StartRunning();
+            FindObjectOfType<CameraMotor>().IsMoving = true;
+            gameCanvas.SetTrigger("Show");
+            menuanim.SetTrigger("Hide");
 
-        }
+
+}
 
         if (isGameStarted && !IsDead)
         {
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
     public void GetCoin()
     {
         // pick up and score coins
+        menu_coinAnim.SetTrigger("Blink");
         coinScore ++;
         coinText.text = coinScore.ToString("0");
         score += COIN_SCORE_AMOUNT;
@@ -89,6 +95,7 @@ public class GameManager : MonoBehaviour
     public void OnDeath()
     {
         IsDead = true;
+        gameCanvas.SetTrigger("Hide");
         deadscoreText.text = score.ToString("0");
         deadcoinText.text = coinScore.ToString("0");
         deathMenuAnim.SetTrigger("Dead");
