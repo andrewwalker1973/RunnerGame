@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
    
 
     // UI and UI Fields
-    public Text scoreText, coinText, modifierText; // convert to TMProd
+    public Text scoreText, coinText, modifierText, hiScoreText; // convert to TMProd
     private float score, coinScore, modifierScore;
     public Animator gameCanvas;
 
@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
         modifierText.text = "x" + modifierScore.ToString("0.0");
         scoreText.text = scoreText.text = score.ToString("0");
         coinText.text = coinScore.ToString("0");
+
+        // Get High Score
+        hiScoreText.text = PlayerPrefs.GetInt("HiScore").ToString();
 
 
     }
@@ -99,5 +102,16 @@ public class GameManager : MonoBehaviour
         deadscoreText.text = score.ToString("0");
         deadcoinText.text = coinScore.ToString("0");
         deathMenuAnim.SetTrigger("Dead");
+
+
+        //check if this is a high score
+        if (score > PlayerPrefs.GetInt("HiScore"))
+        {
+            float s = score;
+            if (s % 1 == 0)
+                s += 1;
+
+            PlayerPrefs.SetInt("HiScore", (int)s);
+        }
     }
 }
