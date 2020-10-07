@@ -12,7 +12,8 @@ public class LevelManager : MonoBehaviour
     private const float DISTANCE_BEFORE_SPAWN = 100f;
     private const int INITIAL_SEGMENTS = 10;
     private const int INITIAL_TRANSITION_SEGMENTS = 4;
-    private const int MAX_SEGMENTS_ON_SCREEN = 15;
+    // private const int MAX_SEGMENTS_ON_SCREEN = 15;
+    private const int MAX_SEGMENTS_ON_SCREEN = 20;
     private Transform cameraContainer;
     private int amountOfActiveSegments;
     private int continiousSegments;

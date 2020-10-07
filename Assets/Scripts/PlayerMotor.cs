@@ -57,26 +57,27 @@ public class PlayerMotor : MonoBehaviour
         }
 
         // gather the inputs on which lane we should be in
-        if (MobileInput.Instance.SwipeLeft)
+   
+        if (MobileInput.Instance.SwipeLeft )
         {
             MoveLane(false);
         }
-        if (MobileInput.Instance.SwipeRight)
+        if (MobileInput.Instance.SwipeRight )
         {
             MoveLane(true);
         }
 
-        /*  if (Input.GetKeyDown(KeyCode.LeftArrow))
-          { 
-              // move left
-              MoveLane(false);
+         if (Input.GetKeyDown(KeyCode.LeftArrow))
+          {
+            // move left
+            MoveLane(false);
           }
           if (Input.GetKeyDown(KeyCode.RightArrow))
           {
               // move right
               MoveLane(true);
           }
-  */
+
         // Calculate where we should be in the future
         Vector3 targetPosition = transform.position.z * Vector3.forward;
         if (desiredLane == 0)
@@ -107,7 +108,7 @@ public class PlayerMotor : MonoBehaviour
            
 
          //   if (Input.GetKeyDown(KeyCode.Space))
-         if (MobileInput.Instance.SwipeUp)
+         if (MobileInput.Instance.SwipeUp || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 //Jump
                 anim.SetTrigger("Jump");
@@ -115,7 +116,7 @@ public class PlayerMotor : MonoBehaviour
               
 
             }
-            else if (MobileInput.Instance.SwipeDown)
+            else if (MobileInput.Instance.SwipeDown || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 //slide
                 StartSliding();
@@ -129,7 +130,7 @@ public class PlayerMotor : MonoBehaviour
           //  Debug.Log("Floating");
             // Fast Falling area
            // if (Input.GetKeyDown(KeyCode.M))
-           if (MobileInput.Instance.SwipeDown)
+           if (MobileInput.Instance.SwipeDown || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 verticalVelocity = -jumpForce;  //drop immediatly to ground
                                                 // Add code to drop quick and then slide
@@ -137,9 +138,23 @@ public class PlayerMotor : MonoBehaviour
                // anim.SetBool("DropSlide", true);
 
             }
+
+           
         }
-        
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // this.transform.Rotate(Vector3.up * 90);
+            // transform.right = Vector3.Slerp(transform.right, Vector3.right * Input.GetAxis("Horizontal"), 0.1f);
+            transform.Rotate(Vector3.up * 90);
+            Debug.Log("Space Key pressed");
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            this.transform.Rotate(Vector3.up * -90);
+            Debug.Log("B Key pressed");
+        }
+
+
         moveVector.y = verticalVelocity;
         moveVector.z = speed;
 
@@ -166,16 +181,7 @@ public class PlayerMotor : MonoBehaviour
 
     }
 
-  //  private bool IsGrounded()
-  //  {
-        //Ray groundRay = new Ray(new Vector3(controller.bounds.center.x, (controller.bounds.center.y - controller.bounds.extents.y) + 0.2f, controller.bounds.center.z),Vector3.down);
-  //      Ray groundRay = new Ray(new Vector3(controller.bounds.center.x, (controller.bounds.center.y - controller.bounds.extents.y), controller.bounds.center.z), Vector3.down);
-  //      Debug.DrawRay(groundRay.origin, groundRay.direction, Color.cyan, 1.0f);
 
-
-   //      return Physics.Raycast(groundRay, 0.001f + 0.1f);
-        
- //   }
 
     public void StartRunning()
     {
