@@ -134,25 +134,14 @@ public class PlayerMotor : MonoBehaviour
             {
                 verticalVelocity = -jumpForce;  //drop immediatly to ground
                                                 // Add code to drop quick and then slide
-            StartSliding();
+            //StartSliding();
                // anim.SetBool("DropSlide", true);
 
             }
 
            
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // this.transform.Rotate(Vector3.up * 90);
-            // transform.right = Vector3.Slerp(transform.right, Vector3.right * Input.GetAxis("Horizontal"), 0.1f);
-            transform.Rotate(Vector3.up * 90);
-            Debug.Log("Space Key pressed");
-        }
-        else if (Input.GetKeyDown(KeyCode.B))
-        {
-            this.transform.Rotate(Vector3.up * -90);
-            Debug.Log("B Key pressed");
-        }
+ 
 
 
         moveVector.y = verticalVelocity;
