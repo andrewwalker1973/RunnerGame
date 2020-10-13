@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
     private bool isGameStarted = false;
     public bool IsDead { set; get; }
     private PlayerMotor motor;
-   
+
+
+    //Try get start buttone to start
+    private bool clickstart = false;
 
     // UI and UI Fields
     public Text scoreText, coinText, modifierText, hiScoreText; // convert to TMProd
@@ -23,7 +26,7 @@ public class GameManager : MonoBehaviour
     private int lastScore;
 
     // Death Menu
-    public Animator deathMenuAnim,menuanim, menu_coinAnim;
+    public Animator deathMenuAnim, menuanim, menu_coinAnim;
     public Text deadscoreText, deadcoinText;
 
     private void Awake()
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (MobileInput.Instance.Tap && !isGameStarted)
+        if (MobileInput.Instance.Tap && !isGameStarted && clickstart)
         {
             isGameStarted = true;
             motor.StartRunning();
@@ -53,19 +56,19 @@ public class GameManager : MonoBehaviour
             menuanim.SetTrigger("Hide");
 
 
-}
+        }
 
         if (isGameStarted && !IsDead)
         {
             //Increase the score
-            
+
             score += (Time.deltaTime * modifierScore); // gain points for the time you are running
             if (lastScore != (int)score)
             {
                 lastScore = (int)score;
                 scoreText.text = score.ToString("0");
             }
-            
+
         }
     }
 
@@ -73,14 +76,14 @@ public class GameManager : MonoBehaviour
     {
         // pick up and score coins
         menu_coinAnim.SetTrigger("Blink");
-        coinScore ++;
+        coinScore++;
         coinText.text = coinScore.ToString("0");
         score += COIN_SCORE_AMOUNT;
         scoreText.text = scoreText.text = score.ToString("0");
 
     }
 
-  
+
 
     public void UpdateModifer(float modifierAmount)
     {
@@ -113,5 +116,10 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("HiScore", (int)s);
         }
+    }
+
+    public void StartRun()
+    {
+        clickstart = true;
     }
 }
