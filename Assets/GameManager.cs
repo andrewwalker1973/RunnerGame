@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (MobileInput.Instance.Tap && !isGameStarted && clickstart)
+        // if (MobileInput.Instance.Tap && !isGameStarted && clickstart) // try start with button click and not actual click
+        if ( !isGameStarted && clickstart)
         {
             isGameStarted = true;
             motor.StartRunning();

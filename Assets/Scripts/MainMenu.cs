@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
 
     public GameObject FaceBookScreen;
+    public GameObject SpinnerScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -38,5 +39,17 @@ public class MainMenu : MonoBehaviour
     {
         
         GameManager.Instance.StartRun();
+    }
+
+    public void OpenSpinner()
+    {
+
+        SpinnerScreen.SetActive(true);
+    }
+    
+    public void CloseSpinner()
+    {
+
+        SpinnerScreen.SetActive(false);
     }
 }
