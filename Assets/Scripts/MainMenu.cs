@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class MainMenu : MonoBehaviour
 {
 
@@ -13,6 +19,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         
     }
 
@@ -51,5 +58,18 @@ public class MainMenu : MonoBehaviour
     {
 
         SpinnerScreen.SetActive(false);
+    }
+
+    public void ShowLeaderBoard()
+    {
+
+        PlayGamesController.AuthenticateUserFromgamemanager();
+        PlayGamesController.ShowLeaderboardUI();
+    }
+
+    public void GoogleConnect()
+    {
+
+        PlayGamesController.AuthenticateUser();
     }
 }

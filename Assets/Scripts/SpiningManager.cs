@@ -42,7 +42,7 @@ public class SpiningManager : MonoBehaviour {
 	private IEnumerator Spin(){
 
 		isCoroutine = false;
-		randVal = Random.Range (200, 300);
+		randVal = Random.Range (20, 100);
 
 		timeInterval = 0.0001f*Time.deltaTime*2;
 

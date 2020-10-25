@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class GameManager : MonoBehaviour
 {
-
     private const int COIN_SCORE_AMOUNT = 5;
     public static GameManager Instance { set; get; }
 
@@ -35,10 +33,12 @@ public class GameManager : MonoBehaviour
         modifierScore = 1;
         //UPdateScores();
         motor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>();
-        modifierText.text = "x" + modifierScore.ToString("0.0");
-        scoreText.text = scoreText.text = score.ToString("0");
+       modifierText.text = "x" + modifierScore.ToString("0.0");
+       scoreText.text = scoreText.text = score.ToString("0");
         coinText.text = coinScore.ToString("0");
 
+        //Debug - set score to be 0
+       // PlayerPrefs.SetInt("HiScore", 0);
         // Get High Score
         hiScoreText.text = PlayerPrefs.GetInt("HiScore").ToString();
 
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // if (MobileInput.Instance.Tap && !isGameStarted && clickstart) // try start with button click and not actual click
-        if ( !isGameStarted && clickstart)
+        if (!isGameStarted && clickstart)
         {
             isGameStarted = true;
             motor.StartRunning();
@@ -116,6 +116,10 @@ public class GameManager : MonoBehaviour
                 s += 1;
 
             PlayerPrefs.SetInt("HiScore", (int)s);
+            // auth user to google
+            PlayGamesController.AuthenticateUserFromgamemanager();
+            // upload high score to google
+            PlayGamesController.PostToLeaderboard((int)s);
         }
     }
 
