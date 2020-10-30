@@ -24,7 +24,7 @@ public class CoinMove : MonoBehaviour
         if (other.gameObject.tag == "PlayerBubble")
         {
             //Add count or give points etc etc.
-            Destroy(gameObject);
+           // Destroy(gameObject);
         }
     }
 }

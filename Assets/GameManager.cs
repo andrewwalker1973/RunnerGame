@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRun()
     {
+        Debug.Log("Start Button Pressed.");
         clickstart = true;
     }
 }
