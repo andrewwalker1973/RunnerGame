@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CoinMove : MonoBehaviour
 {
-    CoinDetector coinScript;
+    Coin coinScript;
+    //CoinMove coinMoveScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        coinScript = gameObject.GetComponent<CoinDetector>();
+        coinScript = gameObject.GetComponent<Coin>();
+      //  coinMoveScript = gameObject.GetComponent<CoinMove>();
     }
 
     // Update is called once per frame
@@ -17,6 +19,7 @@ public class CoinMove : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, coinScript.playerTransform.position,
             coinScript.moveSpeed * Time.deltaTime);
+        //Debug.Log("Should be moving coin");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,7 +27,17 @@ public class CoinMove : MonoBehaviour
         if (other.gameObject.tag == "PlayerBubble")
         {
             //Add count or give points etc etc.
-           // Destroy(gameObject);
+            Debug.Log("CoinMove.cs ");
+           // GameManager.Instance.GetCoin();
+            //Destroy(gameObject);
+            // coinMoveScript.enabled = false;
         }
+
+       // if (other.tag == "Player")
+       // {
+      //      GameManager.Instance.GetCoin();
+            //  anim.SetTrigger("Collected");
+
+      //  }
     }
 }

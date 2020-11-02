@@ -20,6 +20,7 @@ public class CoinDetector : MonoBehaviour
     {
         if (other.gameObject.tag == "CoinDetector")
         {
+            Debug.Log("coindector hot");
             coinMoveScript.enabled = true;
         }
     }
