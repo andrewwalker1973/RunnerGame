@@ -6,7 +6,7 @@ public class ItemLoaderManager : MonoBehaviour
 {
 
     public static ItemLoaderManager Instance;
-    //public GameObject Coin;
+    public GameObject Coin;
     public GameObject[] PowerUps;
 
     void Start()
@@ -15,7 +15,7 @@ public class ItemLoaderManager : MonoBehaviour
         {
             // If Instance already exists, we should get rid of this game object
             // and use the original game object that set Instance  
-            Destroy(gameObject);
+           Destroy(gameObject);
             return;
         }
         // If Instance doesn't exist, we initialize the Player Manager

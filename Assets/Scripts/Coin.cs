@@ -4,112 +4,102 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    /*   private Animator anim;
-       private GameObject _player;
-       private readonly int _speed = 30;
-
-       //public AudioClip CollectCoinSFX;
-       //private SoundManager _soundManager;
-
-       private void Start()
-       {
-          // _soundManager = GetComponent<SoundManager>();
-       }
-
-       private void Awake()
-       {
-           anim = GetComponent<Animator>();
-       }
-
-       private void Update()
-       {
-           if (_player != null)
-           {
-               print("coin moving");
-               float step = _speed * Time.deltaTime;
-               transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, step);
-
-           }
-       }
-
-       private void OnEnable()
-       {
-           anim.SetTrigger("Spawn");
-       }
-
-       private void OnTriggerEnter(Collider other)
-       {
 
 
+    // public Transform playerTransform;
+    //   public float moveSpeed = 17f;
+    // private Animator anim;
+    //   CoinMove coinMoveScript;
 
-           // activate when hit
-           if (other.tag == "Player")
-           {
-               GameManager.Instance.GetCoin();
-               anim.SetTrigger("Collected");
+    public AudioClip CollectCoinsSFX;
+    private SoundManager _soundManager;
+    private GameObject _player;
+    private readonly int _speed = 30;
+   // private AudioSource source;
 
-           }
-       }
+    // try fix coinnot leaving
+    // private GameObject objectToDeactivate;
 
-       public void Follow(GameObject player)
-       {
-           _player = player;
-       }
 
-       public void Collect()
-       {
-         //  _soundManager.PlaySFXClip(CollectCoinSFX);
-           StartCoroutine(RemoveGameObject());
-       }
-
-       private IEnumerator RemoveGameObject()
-       {
-           yield return new WaitForSeconds(0.1f);
-           Destroy(gameObject);
-       }
-    */
-
-    public Transform playerTransform;
-    public float moveSpeed = 17f;
-   // private Animator anim;
-    CoinMove coinMoveScript;
-
-   /* private void Awake()
+    private void Awake()
     {
-        anim = GetComponent<Animator>();
+        //    anim = GetComponent<Animator>();
+        //  objectToDeactivate.SetActive(true);
+        _soundManager = GetComponent<SoundManager>();
     }
 
-    private void OnEnable()
-    {
-        anim.SetTrigger("Spawn");
-    }
-   */
     private void Start()
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        coinMoveScript = gameObject.GetComponent<CoinMove>();
+        //     playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        //     coinMoveScript = gameObject.GetComponent<CoinMove>();
+        
 
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void Update()
     {
-        if (other.gameObject.tag == "CoinDetector")
+        if (_player != null)
         {
-            Debug.Log("Coin.cs trigger");
-            coinMoveScript.enabled = true;
-        }
-
-        if (other.gameObject.tag == "PlayerBubble")
-        {
-            coinMoveScript.enabled = false;
-        }
-
-        if (other.tag == "Player")
-        {
-            GameManager.Instance.GetCoin();
-          //  anim.SetTrigger("Collected");
-
+            print("Coin moving");
+            float step = _speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, step);
         }
     }
+    /*   private void OnTriggerEnter(Collider other)
+       {
+           if (other.gameObject.tag == "CoinDetector")
+           {
+              // Debug.Log("Coin.cs trigger");
+               coinMoveScript.enabled = true;
+           }
 
+           if (other.gameObject.tag == "PlayerBubble" )
+           {
+               coinMoveScript.enabled = false;
+               GameManager.Instance.GetCoin();
+           }
+
+           if (other.tag == "Player")
+         {
+             GameManager.Instance.GetCoin();
+          //   anim.SetTrigger("Collected");
+
+
+           }
+       }
+    */
+    private void OnEnable()
+    {
+        ///  anim.SetTrigger("Spawn");
+        ///  // try remove game objects not collected
+        ///  
+        StartCoroutine(RemoveGameObject_not_collect());
+    }
+
+    public void Collect()
+    {
+        //Debug.Log("Coin Collected");
+        _soundManager.PlaySFXClip(CollectCoinsSFX);
+        StartCoroutine(RemoveGameObject());
+        
+    }
+
+    private IEnumerator RemoveGameObject()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Destroy(gameObject);
+    }
+
+    private IEnumerator RemoveGameObject_not_collect()
+    {
+        yield return new WaitForSeconds(50f);
+       // Debug.Log("Remove old coin");
+        Destroy(gameObject);
+    }
+
+    public void Follow(GameObject player)
+    {
+        _player = player;
+    }
 }

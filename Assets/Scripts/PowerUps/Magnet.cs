@@ -4,35 +4,22 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-    //  public AudioClip CollectMagnetSFX;
+     public AudioClip CollectMagnetSFX;
 
-    //  private SoundManager _soundManager;
+      private SoundManager _soundManager;
 
-    /*   void Start()
+       void Start()
        {
-      //     _soundManager = GetComponent<SoundManager>();
+          _soundManager = GetComponent<SoundManager>();
        }
 
 
-       public void Collect()
-       {
-           // _soundManager.PlaySFXClip(CollectCoinSFX);
-           Debug.Log("Magnet collect function");
-           StartCoroutine(RemoveGameObject());
-       }
+     
+
+   // public GameObject coinDetectorobj;
 
 
-       private IEnumerator RemoveGameObject()
-       {
-           yield return new WaitForSeconds(0.1f);
-          // Destroy(gameObject);
-       }
-    */
-
-    public GameObject coinDetectorobj;
-
-
-    private void Start()
+  /*  private void Start()
     {
         coinDetectorobj = GameObject.FindGameObjectWithTag("CoinDetector");
         coinDetectorobj.SetActive(false);
@@ -42,7 +29,10 @@ public class Magnet : MonoBehaviour
     {
         if (other.gameObject.tag == "Player") ;
         StartCoroutine(ActivateCoin());
+        Debug.Log("transform.GetChild(0).gameObject" + transform.GetChild(0).gameObject);
         Destroy(transform.GetChild(0).gameObject);
+        // try get rif of magnet clone
+       StartCoroutine(RemoveGameObject());
     }
 
     IEnumerator ActivateCoin()
@@ -50,5 +40,26 @@ public class Magnet : MonoBehaviour
         coinDetectorobj.SetActive(true);
         yield return new WaitForSeconds(4f);
         coinDetectorobj.SetActive(false);
+    }
+
+   private IEnumerator RemoveGameObject()
+    {
+        yield return new WaitForSeconds(4f);
+        Debug.Log("Should delete magnet object");
+         Destroy(gameObject);
+    }
+  */
+    public void Collect()
+    {
+        // _soundManager.PlaySFXClip(CollectCoinSFX);
+        Debug.Log("Magnet collect function");
+        StartCoroutine(RemoveGameObject1());
+    }
+
+
+    private IEnumerator RemoveGameObject1()
+    {
+        yield return new WaitForSeconds(0.1f);
+         Destroy(gameObject);
     }
 }

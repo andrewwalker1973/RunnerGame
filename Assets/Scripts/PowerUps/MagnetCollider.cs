@@ -9,9 +9,9 @@ public class MagnetCollider : MonoBehaviour
         switch (other.tag)
         {
             case "Coin":
-                Debug.Log("Coin Collid");
+               // Debug.Log("Coin Collid");
                 Coin coin = other.GetComponent<Coin>();
-            //    coin.Follow(gameObject.transform.parent.gameObject);  
+               coin.Follow(gameObject.transform.parent.gameObject);  
                 break;
         }
     }

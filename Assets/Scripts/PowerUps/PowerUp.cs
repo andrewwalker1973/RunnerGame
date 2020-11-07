@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour
+public class PowerUp
 {
     // getter and setter for changing the value of the Power Up's duration.
     public float Duration
