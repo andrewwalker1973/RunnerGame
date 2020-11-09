@@ -30,7 +30,7 @@ public class UIController : MonoBehaviour {
             //Convert the value in the input field from string to long
             if(long.TryParse(scoreInputField.text, out scoreToPost))
             {
-                PlayGamesController.PostToLeaderboard(scoreToPost);
+         //       PlayGamesController.PostToLeaderboard(scoreToPost);
             }
             else
             {
@@ -42,6 +42,6 @@ public class UIController : MonoBehaviour {
     public void OnButtonShowLeaderboard()
     {
         Debug.Log("Showing leaderboard");
-        PlayGamesController.ShowLeaderboardUI();
+      //  PlayGamesController.ShowLeaderboardUI();
     }
 }

@@ -181,9 +181,9 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt("HiScore", (int)s);
             // auth user to google
-            PlayGamesController.AuthenticateUserFromgamemanager();
+         //   PlayGamesController.AuthenticateUserFromgamemanager();
             // upload high score to google
-            PlayGamesController.PostToLeaderboard((int)s);
+         //   PlayGamesController.PostToLeaderboard((int)s);
         }
     }
 

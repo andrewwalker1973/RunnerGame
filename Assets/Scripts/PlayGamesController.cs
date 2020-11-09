@@ -8,15 +8,16 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayGamesController : MonoBehaviour {
+public class PlayGamesController : MonoBehaviour
+{
 
     public Text mainText;
 
     private void Start()
     {
-      //  AuthenticateUser();
+        //  AuthenticateUser();
     }
-    
+
     public static void AuthenticateUser()
     {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
@@ -33,13 +34,13 @@ public class PlayGamesController : MonoBehaviour {
             else
             {
                 Debug.LogError("Unable to sign in to Google Play Games Services");
-               //mainText.text = "Could not login to Google Play Games Services";
-               // mainText.color = Color.red;
+                //mainText.text = "Could not login to Google Play Games Services";
+                // mainText.color = Color.red;
                 // if cant conect still oad game screen
                 SceneManager.LoadScene("GameScene");
             }
         });
-        
+
     }
 
 
@@ -62,7 +63,7 @@ public class PlayGamesController : MonoBehaviour {
                 //mainText.text = "Could not login to Google Play Games Services";
                 // mainText.color = Color.red;
                 // if cant conect still oad game screen
-                
+
             }
         });
 
@@ -81,9 +82,9 @@ public class PlayGamesController : MonoBehaviour {
         });
     }
 
-   public static void ShowLeaderboardUI()
+    public static void ShowLeaderboardUI()
     {
         PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_high_score);
     }
-   
+
 }
