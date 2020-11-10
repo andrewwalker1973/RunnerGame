@@ -27,7 +27,7 @@ public class PlayerCollider : MonoBehaviour
     // code for powerup triggger
     void OnTriggerEnter(Collider other)
     {
-       print(other + " name " + other.name);
+      // print(other + " name " + other.name);
         switch (other.tag)
         {
              case "Coin":
@@ -35,7 +35,7 @@ public class PlayerCollider : MonoBehaviour
                  break;
           case "Magnet":
                 MagnetCollision(other);
-                Debug.Log("Magnet collide");
+         //       Debug.Log("Magnet collide");
                 break;
         
             default:
@@ -47,7 +47,7 @@ public class PlayerCollider : MonoBehaviour
     private void CoinCollision(Collider other)
     {
         Coin coin = other.GetComponent<Coin>();
-        Debug.Log("Coin Collide");
+      //  Debug.Log("Coin Collide");
        coin.Collect();
         GameManager.Instance.CollectCoin();
     }
@@ -66,7 +66,7 @@ public class PlayerCollider : MonoBehaviour
     private void MagnetCollision(Collider other)
     {
 
-        Debug.Log("MagnetCollision");
+       // Debug.Log("MagnetCollision");
         GameManager.Instance.AddPowerUp(GameManager.PowerUpType.Magnet);
         //  MagnetDestroy magnet1 = other.GetComponent<MagnetDestroy>();
         //     magnet1.Collect();

@@ -5,14 +5,14 @@ using UnityEngine;
 public class MagnetDestroy : MonoBehaviour
 {
     // Start is called before the first frame update
- /*   void Start()
+    void Start()
     {
         Destroy(gameObject, 70f);
         Debug.Log("&&&&&&&&&&&&&&&Destroy cuse not used");
 
     }
 
-    // Update is called once per frame
+ /*   // Update is called once per frame
     void Update()
     {
         

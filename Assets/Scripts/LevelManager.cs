@@ -9,8 +9,8 @@ public class LevelManager : MonoBehaviour
     public  bool SHOW_COLLIDER = true;  //AW remove before build
 
     // Level Spawning
-    private const float DISTANCE_BEFORE_SPAWN = 100f;
-    private const int INITIAL_SEGMENTS = 10;
+    private const float DISTANCE_BEFORE_SPAWN = 100f; // /was 100
+    private const int INITIAL_SEGMENTS = 5;// was 10
     private const int INITIAL_TRANSITION_SEGMENTS = 4;
     // private const int MAX_SEGMENTS_ON_SCREEN = 15;
     private const int MAX_SEGMENTS_ON_SCREEN = 20;
@@ -70,15 +70,24 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        
+        //Debug.Log("MAX_SEGMENTS_ON_SCREEN" + MAX_SEGMENTS_ON_SCREEN);
         if (currentSpawnZ - cameraContainer.position.z < DISTANCE_BEFORE_SPAWN)
         {
+            Debug.Log("Update ");
+            Debug.Log("currentSpawnZ" + currentSpawnZ);
+            Debug.Log("cameraContainer.position.z" + cameraContainer.position.z);
+
+            Debug.Log("DISTANCE_BEFORE_SPAWN" + DISTANCE_BEFORE_SPAWN);
+
+            Debug.Log("$$$$$$$$$$$$$$ CREATE SEGMENT");
+
             GenerateSegment();
 
         }
 
         if (amountOfActiveSegments >= MAX_SEGMENTS_ON_SCREEN)
         {
+            Debug.Log("Shoudl despawn");
             segments[amountOfActiveSegments - 1].DeSpawn();
             amountOfActiveSegments--;
 
@@ -169,6 +178,8 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnSegment()
     {
+        Debug.Log("Shoudl spawn segment");
+        
         List<Segment> possibleSeg = availableSegments.FindAll(x => x.beginY1 == y1 || x.BeginY2 == y2 || x.BeginY3 == y3);
         int id = Random.Range(0, possibleSeg.Count);
 
@@ -178,10 +189,14 @@ public class LevelManager : MonoBehaviour
         y3 = s.endY3;
 
         s.transform.SetParent(transform);
+       
+        
         s.transform.localPosition = Vector3.forward * currentSpawnZ;
-
+        Debug.Log("s.length" + s.length);
         currentSpawnZ += s.length;
+        Debug.Log("currentSpawnZ" + currentSpawnZ);
         amountOfActiveSegments ++;
+        Debug.Log("%%%%%%%%%%%%%%%%%%%%%%%%%S.transform" + s.transform.localPosition);
         s.Spawn();
 
 
@@ -190,7 +205,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnTransition()
     {
-
+        Debug.Log("Should spawn trans");
         List<Segment> possibleTransition = availableTransitions.FindAll(x => x.beginY1 == y1 || x.BeginY2 == y2 || x.BeginY3 == y3);
         int id = Random.Range(0, possibleTransition.Count);
 
@@ -203,8 +218,23 @@ public class LevelManager : MonoBehaviour
         s.transform.localPosition = Vector3.forward * currentSpawnZ;
 
         currentSpawnZ += s.length;
+        Debug.Log("currentSpawnZ" + currentSpawnZ);
         amountOfActiveSegments++;
         s.Spawn();
 
     }
+
+   
+    public void UpdateSpawnOrigin(Vector3 originDelta)
+    {
+        // originDelta;
+        Debug.Log("Level Manager originDelta " + originDelta);
+       // currentSpawnZ = 0;
+        Debug.Log("###################currentSpawnZ" + currentSpawnZ);
+        
+
+
+    }
+   
 }
+

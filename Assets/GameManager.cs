@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
             foreach (KeyValuePair<PowerUpType, PowerUp> entry in powerUpDictionary)
             {
                 entry.Value.Duration -= Time.deltaTime;
-                Debug.Log("entry.Value.Duration" + entry.Value.Duration);
+           //     Debug.Log("entry.Value.Duration" + entry.Value.Duration);
 
 
                 // We can't remove an item from a dictionary if we're iterating through it.
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
                 if (entry.Value.Duration <= 0)
                 {
                     itemsToRemove.Add(entry.Key);
-                    Debug.Log("duration ended");
+              //      Debug.Log("duration ended");
                 }
 
             }

@@ -8,7 +8,7 @@ public class PathItemGenerator : MonoBehaviour
     private string containerString = "Container";
    private string spawnPointString = "Spawn Points"; // string to find our Spawn Points container
     private string powerupSpawnPointString = "Powerup Spawn Points"; // string to find our powerup spawn points container
-   private int numberOfCoinsToGenerate = 5;
+   private int numberOfCoinsToGenerate = 1;  //was 5
    private int coinDistanceGap = 20;
 
 
@@ -21,18 +21,18 @@ public class PathItemGenerator : MonoBehaviour
         //StartCoroutine(resetSpawnpoints());
     }
 
-    public void OnEnable()
+  /*public void OnEnable()
     {
 
-        Debug.Log("on enable running");
+    //    Debug.Log("on enable running");
         SpawnCoin();
         SpawnPowerUp();
     }
-
+  */
 
     private IEnumerator resetSpawnpoints()
     {
-        Debug.Log("Restet spawn points");
+    //    Debug.Log("Restet spawn points");
         yield return new WaitForSeconds(10f);
         SpawnCoin();
         StartCoroutine(resetSpawnpoints());
@@ -42,7 +42,7 @@ public class PathItemGenerator : MonoBehaviour
     private void SpawnCoin()
       {
 
-        Debug.Log("SpawnCoin COin");
+    //    Debug.Log("SpawnCoin COin");
         Transform spawnPoint = PickSpawnPoint(containerString, spawnPointString);
           // We then create a loop of X items that are Y units apart from each other
           for (int i = 0; i < numberOfCoinsToGenerate; i++)
@@ -68,7 +68,7 @@ public class PathItemGenerator : MonoBehaviour
             GameObject[] powerUps = ItemLoaderManager.Instance.PowerUps;
             int powerUpIndex = Random.Range(0, powerUps.Length);
             Instantiate(powerUps[powerUpIndex], newPosition, Quaternion.identity);
-            Debug.Log("Creating power up an spawn point");
+        //    Debug.Log("Creating power up an spawn point");
         }
     }
   
@@ -79,7 +79,7 @@ public class PathItemGenerator : MonoBehaviour
         // are all spawn points to create a spawn point. The benefit of this is so that we don't have
         // to manually attach any game objects to the script, however we're more likely to have our code break
         // if we were to rename or restructure the spawn points
-        Debug.Log("Picking sapawn point");
+       // Debug.Log("Picking sapawn point");
         Transform container = transform.Find(spawnPointContainerString);
         Transform spawnPointContainer = container.Find(spawnPointString);
 
@@ -91,8 +91,8 @@ public class PathItemGenerator : MonoBehaviour
 
         for (int i = 0; i < spawnPointContainer.childCount; i++)
         {
-            Debug.Log("*********************spawnPointContainer.childCount " + spawnPointContainer.childCount);
-            Debug.Log("I value" + i);
+     //       Debug.Log("*********************spawnPointContainer.childCount " + spawnPointContainer.childCount);
+        //    Debug.Log("I value" + i);
             spawnPoints[i] = spawnPointContainer.GetChild(i);
         }
 
@@ -101,7 +101,7 @@ public class PathItemGenerator : MonoBehaviour
         // and quietly return
         if (spawnPoints.Length == 0)
         {
-            Debug.Log("We have a path has no spawn points!");
+     //       Debug.Log("We have a path has no spawn points!");
         }
 
 
