@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 
     // Level Spawning
     private const float DISTANCE_BEFORE_SPAWN = 100f; // /was 100
-    private const int INITIAL_SEGMENTS = 5;// was 10
+    private const int INITIAL_SEGMENTS = 10;// was 10
     private const int INITIAL_TRANSITION_SEGMENTS = 4;
     // private const int MAX_SEGMENTS_ON_SCREEN = 15;
     private const int MAX_SEGMENTS_ON_SCREEN = 20;
@@ -42,17 +42,27 @@ public class LevelManager : MonoBehaviour
     // GamePlay
     private bool isMoving = false;
 
+    public float debugpos = 0;
+    private GameObject player;
+
+    // attempt at origion root
+    public GameObject OrigionRoot;
+
+
     private void Awake()
     {
         Instance = this;
         cameraContainer = Camera.main.transform;
         currentSpawnZ = 0;
         currentLevel = 0;
-                          
+        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     private void Start()
     {
+        // attempt at orogion root
+        gameObject.transform.SetParent(OrigionRoot.transform, false);
 
         for (int i = 0; i < INITIAL_SEGMENTS; i++)
         {
@@ -70,21 +80,29 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+         debugpos = currentSpawnZ - cameraContainer.position.z;
+      //  Debug.Log("currentSpawnZ " + currentSpawnZ);
+      //  Debug.Log("debugpos 1 ############# " + debugpos);
+        //Debug.Log("cameraContainer.position.z" + cameraContainer.position.z);
+
         //Debug.Log("MAX_SEGMENTS_ON_SCREEN" + MAX_SEGMENTS_ON_SCREEN);
         if (currentSpawnZ - cameraContainer.position.z < DISTANCE_BEFORE_SPAWN)
         {
-            Debug.Log("Update ");
-            Debug.Log("currentSpawnZ" + currentSpawnZ);
-            Debug.Log("cameraContainer.position.z" + cameraContainer.position.z);
+            debugpos = currentSpawnZ - cameraContainer.position.z;
 
-            Debug.Log("DISTANCE_BEFORE_SPAWN" + DISTANCE_BEFORE_SPAWN);
+        //    Debug.Log("Update ");
+            Debug.Log("currentSpawnZ" + currentSpawnZ);
+        //    Debug.Log("cameraContainer.position.z" + cameraContainer.position.z);
+
+         //   Debug.Log("DISTANCE_BEFORE_SPAWN" + DISTANCE_BEFORE_SPAWN);
+         //   Debug.Log("debugpos **************** " + debugpos);
 
             Debug.Log("$$$$$$$$$$$$$$ CREATE SEGMENT");
 
             GenerateSegment();
 
         }
-
+     
         if (amountOfActiveSegments >= MAX_SEGMENTS_ON_SCREEN)
         {
             Debug.Log("Shoudl despawn");
@@ -159,6 +177,8 @@ public class LevelManager : MonoBehaviour
 
     private void GenerateSegment()
     {
+        Debug.Log("In generate segment");
+        
         SpawnSegment();
 
         if (Random.Range(0f,1f) < (continiousSegments * 0.25f))
@@ -192,11 +212,11 @@ public class LevelManager : MonoBehaviour
        
         
         s.transform.localPosition = Vector3.forward * currentSpawnZ;
-        Debug.Log("s.length" + s.length);
+    //    Debug.Log("s.length" + s.length);
         currentSpawnZ += s.length;
-        Debug.Log("currentSpawnZ" + currentSpawnZ);
+     //   Debug.Log("currentSpawnZ" + currentSpawnZ);
         amountOfActiveSegments ++;
-        Debug.Log("%%%%%%%%%%%%%%%%%%%%%%%%%S.transform" + s.transform.localPosition);
+     //   Debug.Log("%%%%%%%%%%%%%%%%%%%%%%%%%S.transform" + s.transform.localPosition);
         s.Spawn();
 
 
@@ -218,23 +238,40 @@ public class LevelManager : MonoBehaviour
         s.transform.localPosition = Vector3.forward * currentSpawnZ;
 
         currentSpawnZ += s.length;
-        Debug.Log("currentSpawnZ" + currentSpawnZ);
+    //    Debug.Log("currentSpawnZ" + currentSpawnZ);
         amountOfActiveSegments++;
         s.Spawn();
 
     }
 
-   
+
     public void UpdateSpawnOrigin(Vector3 originDelta)
     {
         // originDelta;
-        Debug.Log("Level Manager originDelta " + originDelta);
-       // currentSpawnZ = 0;
-        Debug.Log("###################currentSpawnZ" + currentSpawnZ);
+     //   Debug.Log("Level Manager originDelta " + originDelta);
+        //currentSpawnZ = currentSpawnZ + originDelta;
+     //   Debug.Log("reduce spawnz by 500" + currentSpawnZ);
+        currentSpawnZ = currentSpawnZ - 200;
+    ///    Debug.Log("new  spawnz " + currentSpawnZ);
+    //    Debug.Log("###################currentSpawnZ" + currentSpawnZ);
+
+        /*   player.transform.parent = this.transform;
+           for (int i = 0; i < segments.Count; ++i)
+           {
+               segments[i].transform.parent = this.transform;
+           }
+           transform.position = Vector3.zero;//Moving to origin
+           player.transform.parent = null;
+           for (int i = 0; i < segments.Count; ++i)
+           {
+               segments[i].transform.parent = null;
+           }
+        */
+
         
 
-
     }
+       
    
 }
 

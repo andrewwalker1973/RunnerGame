@@ -41,6 +41,9 @@ public class PlayerMotor : MonoBehaviour
     public GameObject MagnetCollider;
     CoinMove coinMoveScript;
 
+    //attepmpt at origion root
+    public GameObject OrigionRoot;
+
 
     private void Start()
     {
@@ -53,6 +56,10 @@ public class PlayerMotor : MonoBehaviour
      //   coinDetectorobj = GameObject.FindGameObjectWithTag("CoinDetector");
       //  coinDetectorobj.SetActive(false);
         coinMoveScript = gameObject.GetComponent<CoinMove>();
+
+
+        //origionroot
+        gameObject.transform.SetParent(OrigionRoot.transform, false);
 
 
     }
@@ -276,6 +283,17 @@ public class PlayerMotor : MonoBehaviour
         Destroy(magnetCollider.gameObject);
         magnetCollider = null;
     }
-   
-  
+
+
+    public void UpdateSpawnOrigin(Vector3 originDelta)
+    {
+
+        // currentSpawnZ = currentSpawnZ - 200;
+        transform.position = OrigionRoot.transform.position;
+
+
+
+
+
+    }
 }

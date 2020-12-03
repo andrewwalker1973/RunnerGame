@@ -7,8 +7,8 @@ public class MagnetDestroy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 70f);
-        Debug.Log("&&&&&&&&&&&&&&&Destroy cuse not used");
+        Destroy(gameObject, 40f);
+       // Debug.Log("&&&&&&&&&&&&&&&Destroy cuse not used");
 
     }
 

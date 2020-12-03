@@ -22,17 +22,11 @@ public class Coin : MonoBehaviour
     // private GameObject objectToDeactivate;
 
 
-    private void Awake()
-    {
-        //    anim = GetComponent<Animator>();
-        //  objectToDeactivate.SetActive(true);
-     //   _soundManager = GetComponent<SoundManager>();
-    }
+    
 
     private void Start()
     {
-        //     playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        //     coinMoveScript = gameObject.GetComponent<CoinMove>();
+        
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
@@ -51,29 +45,16 @@ public class Coin : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, step);
         }
     }
-    /*   private void OnTriggerEnter(Collider other)
+       private void OnTriggerEnter(Collider other)
        {
-           if (other.gameObject.tag == "CoinDetector")
-           {
-              // Debug.Log("Coin.cs trigger");
-               coinMoveScript.enabled = true;
-           }
-
-           if (other.gameObject.tag == "PlayerBubble" )
-           {
-               coinMoveScript.enabled = false;
-               GameManager.Instance.GetCoin();
-           }
-
-           if (other.tag == "Player")
-         {
-             GameManager.Instance.GetCoin();
-          //   anim.SetTrigger("Collected");
-
-
-           }
+            if (other.gameObject.tag == "RearCleanup")
+            {
+          //  Debug.Log("Rear Clean up");
+                StartCoroutine(RemoveGameObject());
+            }
        }
-    */
+
+           
     private void OnEnable()
     {
         ///  anim.SetTrigger("Spawn");
@@ -87,6 +68,7 @@ public class Coin : MonoBehaviour
         //Debug.Log("Coin Collected");
         //  _soundManager.PlaySFXClip(CollectCoinsSFX);
         audioManager.PlaySound(coinSoundName);
+       //gameObject.SetActive(false);
 
         StartCoroutine(RemoveGameObject());
         
@@ -94,14 +76,14 @@ public class Coin : MonoBehaviour
 
     private IEnumerator RemoveGameObject()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f); // was 0.2
         Destroy(gameObject);
     }
 
     private IEnumerator RemoveGameObject_not_collect()
     {
-        yield return new WaitForSeconds(50f);
-       // Debug.Log("Remove old coin");
+        yield return new WaitForSeconds(40f);
+        Debug.Log("Remove old coin");
         Destroy(gameObject);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TriggerExit : MonoBehaviour
 {
-    public float delay = 5f;
+    public float delay = 5f; //was 5
 
     public delegate void ExitAction();
     public static event ExitAction OnChunkExited;
@@ -20,7 +20,7 @@ public class TriggerExit : MonoBehaviour
             if (!exited)
             {
                 exited = true;
-                Debug.Log("On trigger exit");
+               Debug.Log("On trigger exit");
                 OnChunkExited();
                 StartCoroutine(WaitAndDeactivate());
             }
@@ -34,8 +34,8 @@ public class TriggerExit : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         transform.root.gameObject.SetActive(false);
-        Debug.Log("Destory piece");
-        GameObject.Destroy(transform.root.gameObject);
+       // Debug.Log("Destory piece");
+        //GameObject.Destroy(transform.root.gameObject);
 
     }
 

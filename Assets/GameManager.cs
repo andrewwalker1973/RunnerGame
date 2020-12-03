@@ -41,6 +41,13 @@ public class GameManager : MonoBehaviour
     public GameObject Player;
     public GameObject MagnetCollider;
 
+    public MagnetPowerbar magnetPowerbar;
+    public int magnetpower = 10;
+    public float magnettimer = 10f;
+    public GameObject magnetPowerbarUI;
+    private bool isMagnetactive = false;
+    public float Magpercent_num;
+    private float MagpowerUpDuration = 10f;
 
     private void Awake()
     {
@@ -68,7 +75,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-   
+    private void Start()
+    {
+        magnetPowerbar.SetMaxMagentPower(magnetpower);
+    }
 
     private void Update()
     {
@@ -128,6 +138,9 @@ public class GameManager : MonoBehaviour
                         Debug.Log("in power up for loop");
                         Transform magnetCollider = Player.transform.Find("Magnet Collider(Clone)");
                         print(magnetCollider);
+                        magnetPowerbarUI.SetActive(false); // activate the power bar for magnet
+                        isMagnetactive = false;
+                        magnetpower = 10;
                         Destroy(magnetCollider.gameObject);
                         magnetCollider = null;
                         Debug.Log("Should remove magnet from list here");
@@ -143,6 +156,84 @@ public class GameManager : MonoBehaviour
 
 
             /// end of code for powerups
+        }
+
+        if (isMagnetactive == true)
+        {
+            if (magnettimer > 0)
+            {
+                magnettimer -= Time.deltaTime;
+                Magpercent_num = (magnettimer/ MagpowerUpDuration) * 100;
+                Debug.Log("Magpercent_num" + Magpercent_num);
+                Debug.Log("magnetpower" + magnetpower);
+
+                if (Magpercent_num < 100 && Magpercent_num > 90)
+                {
+                    magnetpower = 10;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+
+
+                if (Magpercent_num < 90 && Magpercent_num > 80)
+                {
+                    magnetpower = 9;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 80 && Magpercent_num > 70)
+                {
+                     magnetpower = 8;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 70 && Magpercent_num > 60)
+                {
+                    magnetpower = 7;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 60 && Magpercent_num > 50)
+                {
+                     magnetpower = 6;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 50 && Magpercent_num > 40)
+                {
+                     magnetpower = 5;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 40 && Magpercent_num > 30)
+                {
+                    magnetpower = 4;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 30 && Magpercent_num > 20)
+                {
+                    magnetpower = 3;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 20 && Magpercent_num > 10)
+                {
+                     magnetpower = 2;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+                if (Magpercent_num < 20 && Magpercent_num > 0)
+                {
+                     magnetpower = 1;
+                    magnetPowerbar.SetMagnetPower(magnetpower);
+                }
+
+
+
+
+
+
+
+
+
+            }
+            if (magnettimer < 0)
+            {
+                magnettimer = 0;
+                magnetpower = 10;
+            }
         }
     }
 
@@ -218,25 +309,33 @@ public class GameManager : MonoBehaviour
         {
             case PowerUpType.Magnet:
                 // if we already have the MagnetCollider, don't add it again.
-                       if (powerUpDictionary.ContainsKey(powerUpType))
-                         {
-                              Debug.Log("Adding power up");
-                              break;
-                          }
-                // We add the Magnet Collider to our player.
-                Debug.Log("Createing objet");
-               Instantiate(MagnetCollider, Player.transform.position, Quaternion.identity, Player.transform);
-         //       Debug.Log("Adding power up to player");
-                //Try stop powerup
-          //      StartCoroutine(RemoveMagnet());
+                    
+
+                
+                    if (powerUpDictionary.ContainsKey(powerUpType))
+                    {
+                        Debug.Log("Adding power up");
+                        break;
+                    }
+                    // We add the Magnet Collider to our player.
+                    Debug.Log("Createing objet");
+                    Instantiate(MagnetCollider, Player.transform.position, Quaternion.identity, Player.transform);
+                    magnettimer = 10f;
+                    magnetpower = 10;
+                    isMagnetactive = true;
+                    magnetPowerbarUI.SetActive(true);
+               
                 break;
         }
 
         // An interesting part of this is that if we get another power up that if we
         // get a duplicate power up, we will replace it with the new one.
         Debug.Log("Poweruo dicto");
-        powerUpDictionary[powerUpType] = new PowerUp(powerUpDuration);
+        // powerUpDictionary[powerUpType] = new PowerUp(powerUpDuration);
         //  powerUpDictionary[powerUpType] = gameObject.AddComponent<PowerUp>();
+        
+            powerUpDictionary[powerUpType] = new PowerUp(powerUpDuration);
+       
     }
 
 

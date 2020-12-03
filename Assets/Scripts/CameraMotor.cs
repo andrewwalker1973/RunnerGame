@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CameraMotor : MonoBehaviour
 {
-    
+
+    // attempt at origionroot
+    public GameObject OrigionRoot;
+
 
     public Transform target;
 
@@ -18,6 +21,12 @@ public class CameraMotor : MonoBehaviour
     public bool IsMoving { set; get; }
     public Vector3 rotation = new Vector3(35, 0, 0);
 
+
+    private void Start()
+    {
+        //attempt at origion root
+        gameObject.transform.SetParent(OrigionRoot.transform,true);
+    }
 
     void LateUpdate()
     {
