@@ -18,7 +18,7 @@ public class PlayerMotor : MonoBehaviour
     // Movement
     private CharacterController controller;
     private float jumpForce = 4f; // WAS 4
-    private float gravity = 0f; // was 12 disable to test pooling
+    private float gravity = 12f; 
     private float verticalVelocity;
     
    

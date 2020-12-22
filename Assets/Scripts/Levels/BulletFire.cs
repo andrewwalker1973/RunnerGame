@@ -5,8 +5,11 @@ using UnityEngine;
 public class BulletFire : MonoBehaviour
 {
 
-    public float fireTime = 0.5f;
-      public GameObject bullet;
+   // public float fireTime = 0.5f;
+   //  public GameObject bullet;
+    private int randomInt;
+
+    public GameObject[] selectorArr;
 
     void OnEnable()                         // called from track piece - select new piece on enable
     {
@@ -22,7 +25,7 @@ public class BulletFire : MonoBehaviour
         BulletDestroy.OnFireExited += OnFireExited;     // select next pool item to use
     }
   
-    public int pooledAmount = 40;
+    public int pooledAmount = 25;
     List<GameObject> bullets;
 
     public Vector3 spawnOrigin;             // Vector3 of origin point for floting origion
@@ -32,16 +35,26 @@ public class BulletFire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+       
         bullets = new List<GameObject>();
         for (int i = 0; i < pooledAmount; i++)
         {
-            GameObject obj = (GameObject)Instantiate(bullet);
+            //
+            randomInt = Random.Range(0, selectorArr.Length);
+
+            //GameObject obj = (GameObject)Instantiate(bullet);
+            GameObject obj = Instantiate(selectorArr[randomInt]) as GameObject;
+
+
+            //GameObject obj = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)]
             obj.SetActive(false);
             bullets.Add(obj);
 
         }
         //InvokeRepeating("Fire", fireTime, fireTime);
-        for (int i = 0; i < 10; i++)
+        //for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             Fire();
         }

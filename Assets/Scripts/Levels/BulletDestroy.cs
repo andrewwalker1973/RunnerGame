@@ -4,30 +4,14 @@ using UnityEngine;
 
 public class BulletDestroy : MonoBehaviour
 {
-    public float delay = 2f;
+    public float delay = 60f;
     private bool exited = false;
 
     public delegate void ExitAction();
     public static event ExitAction OnFireExited;
     
 
-    /* private void OnEnable()
-     {
-         Invoke("Destroy", 10f);
-     }
-
-     void Destroy()
-     {
-         gameObject.SetActive(false);
-     }
-
-     private void OnDisable()
-     {
-        CancelInvoke();
-     }
-    */
-
-    
+        
     private void OnTriggerExit(Collider other)   // if the player tag cartag touches collider, mark it as no longer needed and deactivate
     {
         BulletFire BulletFires = gameObject.GetComponent<BulletFire>();
@@ -41,15 +25,17 @@ public class BulletDestroy : MonoBehaviour
         //   {
                exited = true;
                 //     OnFireExited();
-                Debug.Log("EXIT");
-                Debug.Log("new one");
-                //BulletFires.Fire();
-                OnFireExited();
+            ////    Debug.Log("EXIT");
+            ////    Debug.Log("new one");
+            
+        StartCoroutine(WaitAndDeactivate());
+          /////  OnFireExited();
 
 
-                StartCoroutine(WaitAndDeactivate());
-                
-           // }
+               // StartCoroutine(WaitAndDeactivate());
+         ////   transform.root.gameObject.SetActive(false);
+
+            // }
 
 
         }
@@ -57,22 +43,21 @@ public class BulletDestroy : MonoBehaviour
 
     IEnumerator WaitAndDeactivate()
     {
-        yield return new WaitForSeconds(delay);
-        Debug.Log("EXIT  2");
+        yield return new WaitForSeconds(10f);
+        Debug.Log("##########EXIT  2");
+        Debug.Log("EXIT");
+        Debug.Log("new one");
+
+        StartCoroutine(WaitAndDeactivate());
+        OnFireExited();
+
+
+        // StartCoroutine(WaitAndDeactivate());
         transform.root.gameObject.SetActive(false);
-        //gameObject.SetActive(false);
-       // Destroy();
+
+        // transform.root.gameObject.SetActive(false);
+
     }
   
-   /* void Destroy()
-    {
-        gameObject.SetActive(false);
-    }
    
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
-
-   */
 }
