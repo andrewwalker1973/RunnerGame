@@ -2,86 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
+
 public class LevelLayoutGenerator : MonoBehaviour
 {
-    public LevelChunkData[] levelChunkData;
-    public LevelChunkData firstChunk;
+    public LevelChunkData[] levelChunkData;  // Array of track tiles
+    public LevelChunkData firstChunk;       // Which track piece to use first
 
-    private LevelChunkData previousChunk;
+    private LevelChunkData previousChunk;   // which track piece used last
 
-    public Vector3 spawnOrigin;
+    public Vector3 spawnOrigin;             // Vector3 of origin point for floting origion
 
-    private Vector3 spawnPosition;
-    public int chunksToSpawn = 30;
-    // private int countchunks = 0;
+    private Vector3 spawnPosition;             // Vector3 of where to spawn track pieces
+    public int chunksToSpawn = 10;              // How many trackpieces to create when starting
 
     //adding in for pool
-    public int PooledAmount = 30;
-    List<GameObject> trackPieces;
-    public bool willGrow = true;
-    private int chunksToSpawn_count = 0;
-
-
-    void OnEnable()
+    public int PooledAmount = 20;           // Total number of trackpieces in pool
+    List<GameObject> trackPieces;           // list of all Track Pieces
+ 
+    void OnEnable()                         // called from track piece - select new piece on enable
     {
-        // Debug.Log("On Enable");
-        // TriggerExit.OnChunkExited += PickAndSpawnChunk;
         
-        TriggerExit.OnChunkExited += PickAndSpawnChunkPool;
+        
+     //   TriggerExit.OnChunkExited += PickAndSpawnChunkPool;         // select next pool item to use
     }
-
-    private void OnDisable()
+   
+    private void OnDisable()                // called from track piece - select next track piece to use
     {
-        // Debug.Log("On Disable");
-        // TriggerExit.OnChunkExited -= PickAndSpawnChunk;
+      
         
-        TriggerExit.OnChunkExited += PickAndSpawnChunkPool;
+    //    TriggerExit.OnChunkExited += PickAndSpawnChunkPool;     // select next pool item to use
     }
 
 
     void Start()
     {
         // pooling stuff
-        trackPieces = new List<GameObject>();
-        previousChunk = firstChunk;
+        trackPieces = new List<GameObject>();                   // initilize the list
+        previousChunk = firstChunk;                             // indicator of previous track piece used
 
-        //  countchunks = 0;
-        for (int i = 0; i < PooledAmount; i++) // was chunksToSpawn
+
+
+        for (int i = 0; i < PooledAmount; i++)              // create 20 track pieces in the list
         {
-            //  Debug.Log("spawniug");
-         //   PickAndSpawnChunk();
 
-            //  countchunks++;
 
-            LevelChunkData chunkToSpawn = PickNextChunk();
+            LevelChunkData chunkToSpawn = PickNextChunk_nopos();
 
             GameObject objectFromChunk = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)];
             previousChunk = chunkToSpawn;
-            // was orig  Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-            // pooling
-           // GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
 
-            if (chunksToSpawn_count < chunksToSpawn)
-            {
-                GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-                obj.SetActive(true);
-                trackPieces.Add(obj);
-            }
-            else
-            {
-                GameObject obj = (GameObject)Instantiate(objectFromChunk);
-                obj.SetActive(false);
-                trackPieces.Add(obj);
-            }
+         
+            GameObject obj = (GameObject)Instantiate(objectFromChunk);
+            obj.SetActive(false);                                   // set as false as only want small amount to start
+            trackPieces.Add(obj);                                   // add track pieces to List
 
-          //  trackPieces.Add(obj);
-            chunksToSpawn_count++;
+
         }
+
+         for (int i = 0; i < chunksToSpawn; i++)                    // Create 10 initial section of the track and mark active
+        {
+            GetPoolobject();
+        }
+  
 
     }
 
-    LevelChunkData PickNextChunk()
+
+    LevelChunkData PickNextChunk_nopos()                            // Function to determine which trackpiece to used based on entry direction
     {
         List<LevelChunkData> allowedChunkList = new List<LevelChunkData>();
         LevelChunkData nextChunk = null;
@@ -92,22 +79,16 @@ public class LevelLayoutGenerator : MonoBehaviour
         {
             case LevelChunkData.Direction.North:
                 nextRequiredDirection = LevelChunkData.Direction.South;
-                spawnPosition = spawnPosition + new Vector3(0f, 0, previousChunk.chunkSize.y);
-
-                break;
+               break;
             case LevelChunkData.Direction.East:
                 nextRequiredDirection = LevelChunkData.Direction.West;
-                spawnPosition = spawnPosition + new Vector3(previousChunk.chunkSize.x, 0, 0);
-                break;
+               break;
             case LevelChunkData.Direction.South:
                 nextRequiredDirection = LevelChunkData.Direction.North;
-                spawnPosition = spawnPosition + new Vector3(0, 0, -previousChunk.chunkSize.y);
-                break;
+             break;
             case LevelChunkData.Direction.West:
                 nextRequiredDirection = LevelChunkData.Direction.East;
-                spawnPosition = spawnPosition + new Vector3(-previousChunk.chunkSize.x, 0, 0);
-
-                break;
+              break;
             default:
                 break;
         }
@@ -125,156 +106,51 @@ public class LevelLayoutGenerator : MonoBehaviour
         return nextChunk;
 
     }
-
-    void PickAndSpawnChunk()
-    {
-        Debug.Log("PickAndSpawnChunk");
-
-        LevelChunkData chunkToSpawn = PickNextChunk();
-
-        GameObject objectFromChunk = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)];
-        previousChunk = chunkToSpawn;
-        // was orig  Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-        // pooling
-        GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-        obj.SetActive(true);
-
-        trackPieces.Add(obj);
+  
     
-        // if (countchunks < chunksToSpawn)
-        //   {
-        //      obj.SetActive(true);
-        //      trackPieces.Add(obj);
-        // }
-        //  else
-        //   {
-        //       obj.SetActive(false);
-        //      trackPieces.Add(obj);
-        //   }
-    }
+   
 
-    public void UpdateSpawnOrigin(Vector3 originDelta)
+    public void UpdateSpawnOrigin(Vector3 originDelta)          // function to rest the origin point to 0,0,0 
     {
         spawnOrigin = spawnOrigin + originDelta;
     }
 
 
-    void PickAndSpawnChunkPool()
+    void PickAndSpawnChunkPool()                                // function to select next avail track piece
     {
-
-     //   LevelChunkData chunkToSpawn = PickNextChunk();
-
-    //    GameObject objectFromChunk = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)];
-    //    previousChunk = chunkToSpawn;
-
-      for (int i = 0; i < trackPieces.Count; i++)
-        {
-           // Debug.Log("PickAndSpawnChunkPool I couint" + i);
-            //   for (int i = 0; i < trackPieces.Count; i++)
-            //   {
-               Debug.Log("#################VALUE OF I  PickAndSpawnChunkPool" + i);
-            //     if (!trackPieces[i].activeInHierarchy)
-            //    {
-            //        Debug.Log("FOUND SOMETHING");
             GetPoolobject();
-            Debug.Log("end trackPieces[i].transform.position" + trackPieces[i].transform.position);
-            //     trackPieces[i].transform.position = spawnPosition + spawnOrigin;
-             Debug.Log("2nd trackPieces[i].transform.position" + trackPieces[i].transform.position);
-             Debug.Log("2nd Piece Span pos" + spawnPosition);
-               Debug.Log("2nd Piece Span spawnOrigin" + spawnOrigin);
-            trackPieces[i].SetActive(true);
-            
-            break;
-        }
-         //       break;
-         //   }
-          /*  if (trackPieces[i].activeInHierarchy)
-            {
-                Debug.Log("did not find anythig");
-              
-
-                //  PickAndSpawnChunk_false();
-                //  PickAndSpawnChunkPool();
-                //break;
-                GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-                trackPieces[i].transform.position = spawnPosition + spawnOrigin;
-                obj.SetActive(true);
-                trackPieces.Add(obj);
-                break;
-            }
-          
-            //break;
-      //  }
     }
 
-    /*  void PickAndSpawnChunk_false()
-      {
-          Debug.Log("PickAndSpawnChunk_false");
 
-         LevelChunkData chunkToSpawn = PickNextChunk();
-
-          GameObject objectFromChunk = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)];
-          previousChunk = chunkToSpawn;
-          // was orig  Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-          // pooling
-          GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
-          obj.SetActive(false);
-          trackPieces.Add(obj);
-
-      }
-    
-
-    public GameObject GetPoolobject()
+    public GameObject GetPoolobject()                       // function to select next avail track piece
     {
-       
-        for (int i = 0; i < trackPieces.Count; i++)
+
+        
+        for (int i = 0; i < trackPieces.Count; i++)            // for all the items in the List  look for inactive track pieces       
         {
-           Debug.Log("trackPieces.Count" + trackPieces.Count);
-            Debug.Log("GetPoolobject I Begin" + i);
-            if (!trackPieces[i].activeInHierarchy)
-            {
-                Debug.Log("Value of i   GetPoolobject" + i);
-                spawnOrigin = spawnOrigin + new Vector3(0, 0, 20f);
-
-                Debug.Log("#################New Found something");
-             //   Debug.Log("Before 1nd trackPieces[i].transform.position" + trackPieces[i].transform.position);
-              //  Debug.Log("Before Piece Span pos" + spawnPosition);
-             //   Debug.Log("Before Piece Span spawnOrigin" + spawnOrigin);
-
-                trackPieces[i].transform.position = spawnPosition + spawnOrigin; 
-              //  Debug.Log("After trackPieces[i].transform.position" + trackPieces[i].transform.position);
-             //   Debug.Log("After Piece Span pos" + spawnPosition);
-             //   Debug.Log("1nd Piece Span spawnOrigin" + spawnOrigin);
-                trackPieces[i].SetActive(true);
-                
-               return trackPieces[i];
-                
-            }
-
-        }
-        if (willGrow)
-        {
-            Debug.Log("Growing the list");
-            LevelChunkData chunkToSpawn = PickNextChunk();
-
-            GameObject objectFromChunk = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)];
-            previousChunk = chunkToSpawn;
-            GameObject obj = (GameObject)Instantiate(objectFromChunk, spawnPosition + spawnOrigin, Quaternion.identity);
             
-          //  Debug.Log("Piece Span pos" + spawnPosition);
-           // Debug.Log("Piece Span spawnOrigin" + spawnOrigin);
-            trackPieces.Add(obj);
-            return obj;
+            Debug.Log("Looking for Track piece at " + i);
+            if (!trackPieces[i].activeInHierarchy)                  // If not active then pick one  move to correct location and mark ative and return piece knowledge 
 
+
+                //  PROBLEM ISSUE - this for loop only seems to work once for the count of , the trackpieces not active are enabled and used as needed once and then become inactive but never used again.
+            {
+                Debug.Log("######### Found Track Piece at " + i);
+                spawnOrigin = spawnOrigin + new Vector3(0, 0, 20f);
+                trackPieces[i].transform.position = spawnPosition + spawnOrigin; 
+                trackPieces[i].SetActive(true);
+                return trackPieces[i];
+            }
         }
-        return null;
+        
+       return null;
         
     }
     
 }
 
-*/
 
+/*
 public class LevelLayoutGenerator : MonoBehaviour
 {
     public LevelChunkData[] levelChunkData;
@@ -287,7 +163,12 @@ public class LevelLayoutGenerator : MonoBehaviour
     private Vector3 spawnPosition;
     public int chunksToSpawn = 10;
 
-    void OnEnable()
+    //adding in for pool
+    public int PooledAmount = 30;
+    List<GameObject> trackPieces;
+
+
+  //  void OnEnable()
     {
         TriggerExit.OnChunkExited += PickAndSpawnChunk;
     }
@@ -307,6 +188,14 @@ public class LevelLayoutGenerator : MonoBehaviour
 
     void Start()
     {
+
+        // pooling stuff
+        trackPieces = new List<GameObject>();
+        for (int i = 0; i < PooledAmount; i++)
+        {
+
+        }
+
         previousChunk = firstChunk;
 
         for (int i = 0; i < chunksToSpawn; i++)
@@ -376,3 +265,4 @@ public class LevelLayoutGenerator : MonoBehaviour
     }
 
 }
+*/

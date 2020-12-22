@@ -18,7 +18,7 @@ public class PlayerMotor : MonoBehaviour
     // Movement
     private CharacterController controller;
     private float jumpForce = 4f; // WAS 4
-    private float gravity = 12f; 
+    private float gravity = 0f; // was 12 disable to test pooling
     private float verticalVelocity;
     
    
@@ -59,7 +59,7 @@ public class PlayerMotor : MonoBehaviour
 
 
         //origionroot
-        gameObject.transform.SetParent(OrigionRoot.transform, false);
+      //  gameObject.transform.SetParent(OrigionRoot.transform, false);
 
 
     }
@@ -285,15 +285,16 @@ public class PlayerMotor : MonoBehaviour
     }
 
 
-    public void UpdateSpawnOrigin(Vector3 originDelta)
+  /*  public void UpdateSpawnOrigin(Vector3 originDelta)
     {
 
         // currentSpawnZ = currentSpawnZ - 200;
-        transform.position = OrigionRoot.transform.position;
+   transform.position = OrigionRoot.transform.position;
 
-
+       // transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
 
 
     }
+  */
 }

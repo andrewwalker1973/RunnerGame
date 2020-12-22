@@ -25,7 +25,7 @@ public class CameraMotor : MonoBehaviour
     private void Start()
     {
         //attempt at origion root
-        gameObject.transform.SetParent(OrigionRoot.transform,true);
+      //  gameObject.transform.SetParent(OrigionRoot.transform,true);
     }
 
     void LateUpdate()

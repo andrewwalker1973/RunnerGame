@@ -1,27 +1,30 @@
 ﻿using GooglePlayGames.BasicApi;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TriggerExit : MonoBehaviour
 {
-    public float delay = 5f; //was 5
+    public float delay = 5f; 
 
     public delegate void ExitAction();
-    public static event ExitAction OnChunkExited;
+    public static event ExitAction OnChunkFireExited;
 
     private bool exited = false;
 
-    private void OnTriggerExit(Collider other)
+    
+
+    private void OnTriggerExit(Collider other)   // if the player tag cartag touches collider, mark it as no longer needed and deactivate
     {
         CarTag carTag = other.GetComponent<CarTag>();
         if (carTag != null)
         {
+            Debug.Log("EXIT");
             if (!exited)
             {
                 exited = true;
-               Debug.Log("On trigger exit");
-                OnChunkExited();
+                OnChunkFireExited();
                 StartCoroutine(WaitAndDeactivate());
             }
 
@@ -32,11 +35,7 @@ public class TriggerExit : MonoBehaviour
     IEnumerator WaitAndDeactivate()
     {
         yield return new WaitForSeconds(delay);
-
         transform.root.gameObject.SetActive(false);
-       // Debug.Log("Destory piece");
-        //GameObject.Destroy(transform.root.gameObject);
-
     }
 
 }
