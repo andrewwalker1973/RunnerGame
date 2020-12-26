@@ -8,8 +8,9 @@ public class BulletFire : MonoBehaviour
    // public float fireTime = 0.5f;
    //  public GameObject bullet;
     private int randomInt;
+    private const int INITIAL_SEGMENTS = 20;// was 10
 
-    public GameObject[] selectorArr;
+    public GameObject[] segmentArr;
 
     void OnEnable()                         // called from track piece - select new piece on enable
     {
@@ -28,6 +29,14 @@ public class BulletFire : MonoBehaviour
     public int pooledAmount = 25;
     List<GameObject> bullets;
 
+    //try add transitions
+    List<GameObject> Transition;
+    private const int INITIAL_TRANSITION_SEGMENTS = 4;
+    public GameObject[] TransArr;
+    private int randomIntTrans;
+    public int TranspooledAmount = 6;
+    public int TrackPieceCount = 0;
+
     public Vector3 spawnOrigin;             // Vector3 of origin point for floting origion
 
     private Vector3 spawnPosition;             // Vector3 of where to spawn track pieces
@@ -40,37 +49,54 @@ public class BulletFire : MonoBehaviour
         bullets = new List<GameObject>();
         for (int i = 0; i < pooledAmount; i++)
         {
-            //
-            randomInt = Random.Range(0, selectorArr.Length);
 
-            //GameObject obj = (GameObject)Instantiate(bullet);
-            GameObject obj = Instantiate(selectorArr[randomInt]) as GameObject;
+                //Generate Segments
+                randomInt = Random.Range(0, segmentArr.Length);
+                
+             
+                GameObject obj = Instantiate(segmentArr[randomInt]) as GameObject;
 
 
-            //GameObject obj = chunkToSpawn.levelChunks[Random.Range(0, chunkToSpawn.levelChunks.Length)]
-            obj.SetActive(false);
-            bullets.Add(obj);
+               
+                obj.SetActive(false);
+                bullets.Add(obj);
+  
+            
 
         }
-        //InvokeRepeating("Fire", fireTime, fireTime);
-        //for (int i = 0; i < 10; i++)
-        for (int i = 0; i < 20; i++)
+
+        Transition = new List<GameObject>();
+        for (int i = 0; i < TranspooledAmount; i++)
         {
-            Fire();
+            randomIntTrans = Random.Range(0, TransArr.Length);
+                  GameObject Transobj = Instantiate(TransArr[randomIntTrans]) as GameObject;
+                   Transobj.SetActive(false);
+                   Transition.Add(Transobj);
         }
 
+
+        for (int i = 0; i < INITIAL_SEGMENTS; i++)
+        {
+            if (i < INITIAL_TRANSITION_SEGMENTS)
+            {
+                CreateTransition();
+            }
+            else
+            {
+                //Generate Segments
+                CreateSegment();
+            }
+        }
+        TrackPieceCount = 0;
     }
 
-   public  void Fire()
+   public  void CreateSegment()
     {
+        TrackPieceCount++;
         for (int i = 0; i < bullets.Count; i++)
         {
             if (!bullets[i].activeInHierarchy)
             {
-                Debug.Log("Bullets found " + i);
-                //   bullets[i].transform.position = transform.position;
-                //  bullets[i].transform.rotation = transform.rotation;
-
                 spawnOrigin = spawnOrigin + new Vector3(0, 0, 20f);
                 bullets[i].transform.position = spawnPosition + spawnOrigin;
 
@@ -81,6 +107,26 @@ public class BulletFire : MonoBehaviour
         }
     }
 
+
+    public void CreateTransition()
+    {
+        TrackPieceCount++;
+        for (int i = 0; i < Transition.Count; i++)
+        {
+            if (!Transition[i].activeInHierarchy)
+            {
+                spawnOrigin = spawnOrigin + new Vector3(0, 0, 20f);
+                Transition[i].transform.position = spawnPosition + spawnOrigin;
+
+
+                Transition[i].SetActive(true);
+                break;
+            }
+        }
+    }
+
+
+
     public void UpdateSpawnOrigin(Vector3 originDelta)          // function to rest the origin point to 0,0,0 
     {
         spawnOrigin = spawnOrigin + originDelta;
@@ -88,7 +134,16 @@ public class BulletFire : MonoBehaviour
 
     void OnFireExited()
     {
-        Debug.Log("FIRE");
-        Fire();
+       // Debug.Log("TrackPieceCount " + TrackPieceCount);
+
+        if (TrackPieceCount == 10)
+        {
+            CreateTransition();
+            TrackPieceCount = 0;
+        }
+        else
+        {
+            CreateSegment();
+        }
     }
 }

@@ -44,9 +44,9 @@ public class BulletDestroy : MonoBehaviour
     IEnumerator WaitAndDeactivate()
     {
         yield return new WaitForSeconds(10f);
-        Debug.Log("##########EXIT  2");
-        Debug.Log("EXIT");
-        Debug.Log("new one");
+     //   Debug.Log("##########EXIT  2");
+     //   Debug.Log("EXIT");
+     //   Debug.Log("new one");
 
         StartCoroutine(WaitAndDeactivate());
         OnFireExited();

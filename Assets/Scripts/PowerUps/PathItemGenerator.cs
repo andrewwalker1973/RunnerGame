@@ -17,18 +17,18 @@ public class PathItemGenerator : MonoBehaviour
     void Start()
     {
         SpawnCoin();
-        SpawnPowerUp();
+    //    SpawnPowerUp();
         //StartCoroutine(resetSpawnpoints());
     }
 
-  /*public void OnEnable()
+  public void OnEnable()
     {
 
-    //    Debug.Log("on enable running");
+        Debug.Log("on enable running");
         SpawnCoin();
         SpawnPowerUp();
     }
-  */
+  
 
     private IEnumerator resetSpawnpoints()
     {
@@ -42,7 +42,7 @@ public class PathItemGenerator : MonoBehaviour
     private void SpawnCoin()
       {
 
-    //    Debug.Log("SpawnCoin COin");
+        Debug.Log("SpawnCoin COin");
         Transform spawnPoint = PickSpawnPoint(containerString, spawnPointString);
           // We then create a loop of X items that are Y units apart from each other
           for (int i = 0; i < numberOfCoinsToGenerate; i++)
@@ -68,7 +68,7 @@ public class PathItemGenerator : MonoBehaviour
             GameObject[] powerUps = ItemLoaderManager.Instance.PowerUps;
             int powerUpIndex = Random.Range(0, powerUps.Length);
             Instantiate(powerUps[powerUpIndex], newPosition, Quaternion.identity);
-        //    Debug.Log("Creating power up an spawn point");
+            Debug.Log("Creating power up an spawn point");
         }
     }
   
