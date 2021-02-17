@@ -127,10 +127,15 @@ public class BulletFire : MonoBehaviour
 
 
 
-    public void UpdateSpawnOrigin(Vector3 originDelta)          // function to rest the origin point to 0,0,0 
+   public void UpdateSpawnOrigin(Vector3 originDelta)          // function to rest the origin point to 0,0,0 
     {
+        Debug.Log("originDelta " + originDelta);
+        Debug.Log("spawnOrigin " + spawnOrigin);
+
         spawnOrigin = spawnOrigin + originDelta;
+        
     }
+  
 
     void OnFireExited()
     {

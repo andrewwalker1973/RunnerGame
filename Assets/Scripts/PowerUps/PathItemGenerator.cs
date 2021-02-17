@@ -16,15 +16,15 @@ public class PathItemGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnCoin();
-    //    SpawnPowerUp();
+       // SpawnCoin();
+       // SpawnPowerUp();
         //StartCoroutine(resetSpawnpoints());
     }
 
   public void OnEnable()
     {
 
-        Debug.Log("on enable running");
+     //   Debug.Log("on enable running");
         SpawnCoin();
         SpawnPowerUp();
     }
@@ -42,7 +42,7 @@ public class PathItemGenerator : MonoBehaviour
     private void SpawnCoin()
       {
 
-        Debug.Log("SpawnCoin COin");
+      //  Debug.Log("SpawnCoin COin");
         Transform spawnPoint = PickSpawnPoint(containerString, spawnPointString);
           // We then create a loop of X items that are Y units apart from each other
           for (int i = 0; i < numberOfCoinsToGenerate; i++)
@@ -65,10 +65,10 @@ public class PathItemGenerator : MonoBehaviour
             Vector3 newPosition = spawnPoint.transform.position;
 
             // Get our Power-ups and randomly pick one of them to show
-            GameObject[] powerUps = ItemLoaderManager.Instance.PowerUps;
+           GameObject[] powerUps = ItemLoaderManager.Instance.PowerUps;
             int powerUpIndex = Random.Range(0, powerUps.Length);
             Instantiate(powerUps[powerUpIndex], newPosition, Quaternion.identity);
-            Debug.Log("Creating power up an spawn point");
+        //   Debug.Log("Creating power up an spawn point");
         }
     }
   
@@ -79,8 +79,9 @@ public class PathItemGenerator : MonoBehaviour
         // are all spawn points to create a spawn point. The benefit of this is so that we don't have
         // to manually attach any game objects to the script, however we're more likely to have our code break
         // if we were to rename or restructure the spawn points
-       // Debug.Log("Picking sapawn point");
+     //   Debug.Log("Picking sapawn point");
         Transform container = transform.Find(spawnPointContainerString);
+     //   Debug.Log("find string" + container.Find(spawnPointString));
         Transform spawnPointContainer = container.Find(spawnPointString);
 
 
@@ -101,7 +102,7 @@ public class PathItemGenerator : MonoBehaviour
         // and quietly return
         if (spawnPoints.Length == 0)
         {
-     //       Debug.Log("We have a path has no spawn points!");
+            Debug.Log("We have a path has no spawn points!");
         }
 
 

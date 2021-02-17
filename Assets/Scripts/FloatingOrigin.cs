@@ -21,6 +21,8 @@ public class FloatingOrigin : MonoBehaviour
     {
         Vector3 cameraPosition = gameObject.transform.position;
         cameraPosition.y = 0f;
+        cameraPosition.x = 0f;
+
 
         if (cameraPosition.magnitude > threshold)
         {
@@ -30,10 +32,25 @@ public class FloatingOrigin : MonoBehaviour
                 foreach (GameObject g in SceneManager.GetSceneAt(z).GetRootGameObjects())
                 {
                     g.transform.position -= cameraPosition;
+                    
                 }
             }
 
-            Vector3 originDelta = Vector3.zero - cameraPosition;
+            //  Debug.Log("Float cameraPosition1 " + cameraPosition);
+            //   Vector3 newxpos = Vector3.zero;
+            //    newxpos.x = cameraPosition.x;
+              Vector3 originDelta = Vector3.zero - cameraPosition;
+            
+
+            //    Debug.Log("Float cameraPosition " + cameraPosition);
+            //     Debug.Log("Float originDelta " + originDelta);
+            //     Debug.Log("newxpos.x" + newxpos.x);
+            //     originDelta.x= cameraPosition.x;
+            //    Debug.Log("originDelta.x" + originDelta.x);
+
+
+
+
             BulletFireScript.UpdateSpawnOrigin(originDelta);
             Debug.Log("recentering, origin delta = " + originDelta);
         }

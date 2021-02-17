@@ -164,8 +164,8 @@ public class GameManager : MonoBehaviour
             {
                 magnettimer -= Time.deltaTime;
                 Magpercent_num = (magnettimer/ MagpowerUpDuration) * 100;
-                Debug.Log("Magpercent_num" + Magpercent_num);
-                Debug.Log("magnetpower" + magnetpower);
+             //   Debug.Log("Magpercent_num" + Magpercent_num);
+             //   Debug.Log("magnetpower" + magnetpower);
 
                 if (Magpercent_num < 100 && Magpercent_num > 90)
                 {

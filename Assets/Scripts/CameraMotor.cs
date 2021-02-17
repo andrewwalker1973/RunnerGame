@@ -6,7 +6,7 @@ public class CameraMotor : MonoBehaviour
 {
 
     // attempt at origionroot
-    public GameObject OrigionRoot;
+    // public GameObject OrigionRoot;
 
 
     public Transform target;
